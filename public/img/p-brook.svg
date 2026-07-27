@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1500" viewBox="0 0 1200 1500">
+  <defs>
+    <radialGradient id="g" cx="34%" cy="28%" r="90%">
+      <stop offset="0%" stop-color="#dfe6ce"/>
+      <stop offset="42%" stop-color="#b3c0a2"/>
+      <stop offset="100%" stop-color="#54654a"/>
+    </radialGradient>
+    <filter id="paint" x="-20%" y="-20%" width="140%" height="140%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.012 0.02" numOctaves="3" seed="98" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="46" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+    <filter id="grain">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch" result="g"/>
+      <feColorMatrix in="g" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.06 0"/>
+    </filter>
+  </defs>
+
+  <rect width="1200" height="1500" fill="url(#g)"/>
+
+  <!-- painterly strokes -->
+  <g filter="url(#paint)" opacity="0.55">
+    <ellipse cx="384" cy="450" rx="504" ry="360" fill="#dfe6ce" opacity="0.4"/>
+    <ellipse cx="864" cy="990" rx="480" ry="450" fill="#54654a" opacity="0.5"/>
+    <path d="M0 1080 Q 600 869.9999999999999 1200 1170 L 1200 1500 L 0 1500 Z" fill="#54654a" opacity="0.55"/>
+  </g>
+
+  <!-- vignette -->
+  <rect width="1200" height="1500" fill="url(#g)" opacity="0.0"/>
+  <rect width="1200" height="1500" fill="black" opacity="0.10" style="mix-blend-mode:multiply"/>
+  <rect width="1200" height="1500" filter="url(#grain)"/>
+
+  <!-- gilt frame -->
+  <rect x="26" y="26" width="1148" height="1448" fill="none" stroke="#f3e6c4" stroke-opacity="0.55" stroke-width="2"/>
+
+  <!-- monogram -->
+  <text x="1140" y="110" text-anchor="end" font-family="Georgia, 'Times New Roman', serif" font-size="70" font-style="italic" fill="#fbf6ec" fill-opacity="0.5">M</text>
+
+  <!-- title -->
+  <text x="60" y="1430" font-family="Georgia, 'Times New Roman', serif" font-size="52" fill="#fbf6ec" fill-opacity="0.92">Navigating the Brook (study)</text>
+</svg>

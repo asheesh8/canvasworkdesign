@@ -1,0 +1,134 @@
+@import 'tailwindcss';
+
+/* ------------------------------------------------------------------ *
+ * Canvasworks Designs — design tokens
+ * Warm gilded editorial palette inspired by Renaissance canvas & brass.
+ * ------------------------------------------------------------------ */
+@theme {
+  /* surfaces */
+  --color-cream: #f4ecdd;
+  --color-ivory: #fbf6ec;
+  --color-parchment: #efe4d0;
+  --color-sand: #e6d7bd;
+
+  /* ink */
+  --color-ink: #211b12;
+  --color-espresso: #37291a;
+  --color-cocoa: #5a4632;
+  --color-stone: #8a7c68;
+
+  /* metals & accents */
+  --color-gold: #b08a44;
+  --color-brass: #c9a25b;
+  --color-gilt: #e3c988;
+
+  /* art tones */
+  --color-sage: #8a9a7b;
+  --color-terracotta: #b56a4b;
+  --color-dusk: #6f7f92;
+  --color-plum: #7c5a67;
+  --color-forest: #495d47;
+
+  /* fonts (wired to next/font CSS variables in layout) */
+  --font-display: var(--font-fraunces), 'Times New Roman', serif;
+  --font-serif: var(--font-eb-garamond), Georgia, serif;
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+
+  /* fluid display sizes */
+  --text-mega: clamp(4rem, 18vw, 22rem);
+  --text-hero: clamp(2.75rem, 7vw, 6.5rem);
+
+  --radius-panel: 2rem;
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ------------------------------------------------------------------ *
+ * Base
+ * ------------------------------------------------------------------ */
+:root {
+  color-scheme: light;
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  scroll-behavior: auto; /* Lenis handles smoothing */
+}
+
+body {
+  background-color: var(--color-cream);
+  color: var(--color-ink);
+  font-family: var(--font-serif);
+  font-size: 1.0625rem;
+  line-height: 1.65;
+  overflow-x: hidden;
+}
+
+::selection {
+  background: var(--color-gilt);
+  color: var(--color-espresso);
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  font-weight: 380;
+  letter-spacing: -0.015em;
+  line-height: 0.98;
+}
+
+/* Small uppercase eyebrow / nav label */
+.label {
+  font-family: var(--font-sans);
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  font-size: 0.7rem;
+  font-weight: 500;
+}
+
+/* Painterly grain overlay */
+.grain::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.05;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Thin gilt hairline */
+.hairline {
+  border-color: color-mix(in srgb, var(--color-gold) 45%, transparent);
+}
+
+/* Link underline reveal */
+.link-underline {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-size: 0% 1px;
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  transition: background-size 0.4s var(--ease-out-expo);
+}
+.link-underline:hover {
+  background-size: 100% 1px;
+}
+
+/* Hide scrollbar for horizontal rails */
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* Marquee */
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.animate-marquee {
+  animation: marquee var(--marquee-duration, 40s) linear infinite;
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .animate-marquee { animation: none; }
+  * { scroll-behavior: auto !important; }
+}
