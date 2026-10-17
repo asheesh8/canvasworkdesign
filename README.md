@@ -27,13 +27,9 @@ A bespoke, on-brand dashboard built on top of Payload's API: friendly login, das
 **Payload panel (power-user fallback)** — **http://localhost:3000/admin**
 The full Payload CMS for advanced fields (galleries, arrays, versions).
 
-Both use the same login:
-```
-Email:    admin@canvasworks.test
-Password: canvasworks
-```
-
-> Change these before going live (Studio → not yet; use /admin → Users, or create a new admin and delete this one).
+Both use the same login: the first admin is created by `npm run seed` from
+`SEED_ADMIN_EMAIL` (defaults to `admin@canvasworks.test`) and
+`SEED_ADMIN_PASSWORD` in `.env`. Add more admins later in `/admin → Users`.
 
 **Studio internals:** `src/app/(studio)` (routes), `src/components/studio/*` (UI), `src/studio/config.ts` (field config that drives every editor), `src/app/(studio)/studio/actions.ts` (server actions over Payload's Local API).
 

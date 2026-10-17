@@ -3,10 +3,12 @@ import { getPayload } from 'payload'
 import config from '../payload.config'
 import { MURALS, PAINTINGS, PRINTS, CLASSES, POSTS, PRESS, SITE } from '../content/site'
 
+// The first admin's login comes from the environment so no password lives in
+// this public repo. Only used when the users collection is empty.
 const ADMIN = {
   name: 'Lisa Curry Mair',
-  email: 'admin@canvasworks.test',
-  password: 'canvasworks',
+  email: process.env.SEED_ADMIN_EMAIL || 'admin@canvasworks.test',
+  password: process.env.SEED_ADMIN_PASSWORD || '',
 }
 
 async function run() {
@@ -15,11 +17,14 @@ async function run() {
   // ---- Admin user ----
   const existingUsers = await payload.count({ collection: 'users' })
   if (existingUsers.totalDocs === 0) {
+    if (ADMIN.password.length < 12) {
+      throw new Error('Set SEED_ADMIN_PASSWORD (12+ characters) to create the first admin.')
+    }
     await payload.create({
       collection: 'users',
       data: { ...ADMIN, role: 'admin' },
     })
-    console.log(`✔ Admin user created — ${ADMIN.email} / ${ADMIN.password}`)
+    console.log(`✔ Admin user created — ${ADMIN.email}`)
   } else {
     console.log('• Users already exist, skipping admin creation')
   }
