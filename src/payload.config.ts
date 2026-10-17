@@ -32,10 +32,15 @@ export default buildConfig({
   collections: [Murals, Paintings, Prints, Classes, Posts, Press, Media, Users],
   globals: [HomeHero, SiteSettings],
   editor: lexicalEditor(),
+  // Signs admin auth tokens. The fallback is for local development only — set
+  // PAYLOAD_SECRET in production or anyone can forge an admin session.
   secret: process.env.PAYLOAD_SECRET || 'canvasworks-dev-secret-change-me',
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),
   },
+  // Payload stores content in a SQLite/libSQL database. A local file is fine for
+  // development, but a serverless host gives no durable disk, so production needs
+  // DATABASE_URI pointed at a hosted libSQL database (e.g. Turso).
   db: sqliteAdapter({
     client: {
       url: process.env.DATABASE_URI || 'file:./canvasworks.db',
