@@ -2,6 +2,8 @@
 
 A full redesign of [canvasworksdesigns.com](https://canvasworksdesigns.com) — immersive, editorial, and CMS-driven.
 
+**Live:** https://canvasworkdesign.vercel.app
+
 Built with **Next.js 16** (App Router) · **Payload CMS 3** (SQLite) · **Tailwind CSS v4** · **Motion** (motion.dev) · **Lenis** smooth scroll.
 
 ---
@@ -78,3 +80,17 @@ npm run seed             # (re)seed content + admin user
 node scripts/scrape.mjs  # re-run the image migration
 npx tsc --noEmit         # type-check
 ```
+
+## Environment variables
+
+Names only — set values in `.env` locally or in the hosting project's settings.
+
+| Variable | Purpose |
+|---|---|
+| `DATABASE_URI` | Payload's SQLite/libSQL database (`file:./canvasworks.db` locally) |
+| `PAYLOAD_SECRET` | Signs admin auth tokens — must be a long random value in production |
+| `SEED_ADMIN_EMAIL`, `SEED_ADMIN_PASSWORD` | First admin user created by `npm run seed` |
+
+## Deploying
+
+Hosted on Vercel; pushes to `main` deploy to production. Requires Node 24.15+. A local SQLite file doesn't persist on a serverless host, so production should point `DATABASE_URI` at a hosted libSQL database. Run `npm run generate:types` and `npm run generate:importmap` after changing collections.
